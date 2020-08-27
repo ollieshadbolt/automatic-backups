@@ -27,13 +27,14 @@ sender_email = login["sender_email"]
 password = login["password"]
 
 with open(get_dir("receiver_email.txt")) as receiver_email_txt:
-    receiver_email = ", ".join(receiver_email_txt.readlines())
+    receiver_email = receiver_email_txt.readlines()
+
+receiver_email = [_[:-1] for _ in receiver_email]
 
 # Create a multipart message and set headers
 message = MIMEMultipart()
 message["From"] = sender_email
 message["Subject"] = subject
-message["Bcc"] = receiver_email  # Recommended for mass emails
 
 # Add body to email
 message.attach(MIMEText(body, "html"))
