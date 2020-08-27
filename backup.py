@@ -1,4 +1,5 @@
 import datetime
+import os
 import json
 import smtplib
 import ssl
@@ -9,17 +10,23 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 subject = str(datetime.datetime.now())
+script_dir = os.path.dirname(os.path.realpath(__file__))
 
-with open("body.html", encoding="utf8") as body_html:
+
+def get_dir(filename):
+    return os.path.join(script_dir, filename)
+
+
+with open(get_dir("body.html"), encoding="utf8") as body_html:
     body = body_html.read()
 
-with open("login.json") as login_json:
+with open(get_dir("login.json")) as login_json:
     login = json.load(login_json)
 
 sender_email = login["sender_email"]
 password = login["password"]
 
-with open("receiver_email.txt") as receiver_email_txt:
+with open(get_dir("receiver_email.txt")) as receiver_email_txt:
     receiver_email = ", ".join(receiver_email_txt.readlines())
 
 # Create a multipart message and set headers
@@ -34,7 +41,7 @@ message.attach(MIMEText(body, "html"))
 filename = "ollie_shadbolt.kdbx"  # In same directory as script
 
 # Open PDF file in binary mode
-with open(filename, "rb") as attachment:
+with open(get_dir(filename), "rb") as attachment:
     # Add file as application/octet-stream
     # Email client can usually download this automatically as attachment
     part = MIMEBase("application", "octet-stream")
