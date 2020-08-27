@@ -27,9 +27,9 @@ sender_email = login["sender_email"]
 password = login["password"]
 
 with open(get_dir("receiver_email.txt")) as receiver_email_txt:
-    receiver_email = receiver_email_txt.readlines()
+    receiver_email = receiver_email_txt.read()
 
-receiver_email = [_[:-1] for _ in receiver_email]
+receiver_email = [_ for _ in receiver_email.split("\n")]
 
 # Create a multipart message and set headers
 message = MIMEMultipart()
