@@ -1,4 +1,7 @@
-import datetime, json, email, smtplib, ssl
+import datetime
+import json
+import smtplib
+import ssl
 
 from email import encoders
 from email.mime.base import MIMEBase
@@ -37,7 +40,7 @@ with open(filename, "rb") as attachment:
     part = MIMEBase("application", "octet-stream")
     part.set_payload(attachment.read())
 
-# Encode file in ASCII characters to send by email    
+# Encode file in ASCII characters to send by email
 encoders.encode_base64(part)
 
 # Add header as key/value pair to attachment part
